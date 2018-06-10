@@ -11,3 +11,61 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+function .gitcountlines() {
+  git ls-files | while read f; do git blame --line-porcelain $f | grep '^author '; done | sort -f | uniq -ic | sort -n
+}
+
+chrome () {
+  sudo /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome $* 2>&1 &
+}
+
+fpath=(~/ $fpath)
+autoload -Uz compinit && compinit -i
+
+function .dependencyTree() {
+  mvn dependency:tree > dependencies.txt -Dapple.awt.UIElement=true
+}
+
+function .setMavenDebugPort() {
+  MAVEN_DEBUG_PORT=$1
+  : ${MAVEN_DEBUG_PORT:="8000"}
+  export MAVEN_DEBUG_PORT=$MAVEN_DEBUG_PORT
+}
+
+port ()
+{
+  echo Finding port usage: "$@"
+  command lsof -i tcp:"$@"  
+}
+
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
+alias mci='mvn clean install'
+alias prev='cat ~/.zhistory | grep '
+alias timeout=gtimeout
+alias ws="cd ~/workspace"
+alias h="history"
+alias l="ls -al"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias gitacp='git add . && git commit --amend --no-edit && git fp'
+alias folderSize='du -sh */'
+
+function gitpromptinfo() {
+  echo "$FG[2]✚$FG[none] - added"
+  echo "$FG[13]⬆$FG[none] - ahead"
+  echo "$FG[13]⬇$FG[none] - behind"
+  echo "$FG[1]✖$FG[none] - deleted"
+  echo "$FG[4]✱$FG[none] - modified"
+  echo "$FG[5]➜$FG[none] - renamed"
+  echo "$FG[6]S$FG[none] - stashed"
+  echo "$FG[3]❗$FG[none] - unmerged"
+  echo "$FG[7]☠$FG[none] - untracked"
+}
+
+source .zwork

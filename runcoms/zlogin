@@ -14,13 +14,7 @@
   fi
 } &!
 
-# Execute code only if STDERR is bound to a TTY.
-[[ -o INTERACTIVE && -t 2 ]] && {
-
-  # Print a random, hopefully interesting, adage.
-  if (( $+commands[fortune] )); then
-    fortune -s
-    print
-  fi
-
-} >&2
+# Displays random cowsay image on login
+file=$(ls /usr/local/Cellar/cowsay/3.04/share/cows | gshuf -n1)
+print $file
+echo "Hello Ashley!" | cowsay -f $file
