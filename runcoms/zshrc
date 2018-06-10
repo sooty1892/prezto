@@ -55,6 +55,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias gitacp='git add . && git commit --amend --no-edit && git fp'
 alias folderSize='du -sh */'
+alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
 
 function gitpromptinfo() {
   echo "$FG[2]✚$FG[none] - added"
